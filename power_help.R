@@ -2,7 +2,7 @@
 #POWER SIMULATIONS (scenario 3)
 ##########################
 #The mean and SD are calculated separately for two groups: 
-#those in "vanish_1" with the "valsartan" column equal to "A", and those in "vanish_2" with the "valsartan" column equal to "P". 
+#those in "vanish_1" (early-stage HCM) with the "valsartan" column equal to "A" (receiving valsartan), and those in "vanish_2" (Preclinical HCM) with the "valsartan" column equal to "P" (receiving placebo). 
 #The resulting means are stored in "vanish_active_mu" and "vanish_placebo_mu", 
 #while the resulting standard deviations are stored in "vanish_active_sd" and "vanish_placebo_sd".
 
@@ -56,7 +56,7 @@ vanish_placebo_sd<- c(
 
 
 #The code is performing a simulation for a two-sample t-test, where the outcome variable is being compared between two groups: 
-#"active" and "placebo". 
+#"active" and "placebo". Here the active group is simulated based on results from the early-stage HCM cohort and the placebo group is calculated from the preclinical.
 #The simulation is being performed a thousand times, as indicated by the replicate(1000, {...}) function.
 # In each iteration of the simulation, the following steps are performed:
 #   
@@ -70,7 +70,7 @@ simulation_vanish<-
    for (vuf in 1:25) {
      # Within each iteration of the loop, two datasets are generated. 
      #The first dataset has the group label "active" and is generated using the rnorm_multi function
-     # which generates multivariate normally distributed data. 
+     # which generates multivariate normally distributed data taking correlated features into account. 
      #The mean (mu) and covariance (r) are specified. 
      #The second dataset has the group label "placebo" and is generated in a similar manner as the first dataset. 
      #Both datasets are combined into a single data frame dat using rbind.
@@ -119,3 +119,4 @@ simulation_vanish<-
 
 unlist(simulation_vanish) %>% tibble(x= .) %>% 
   mutate(p = if_else(x<0.05,T,F)) %>% group_by(p) %>% summarise(n=n())
+#The result from this calculation gives the estimated power from this computer simulation
