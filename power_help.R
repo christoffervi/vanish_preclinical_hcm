@@ -1,7 +1,7 @@
 #########################
 #POWER SIMULATIONS (scenario 3)
 ##########################
-#The mean and SD are calculated separately for two groups: 
+#The mean and SD are calculated separately for change in each of the 9 outcome components for two groups: 
 #those in "vanish_1" (early-stage HCM) with the "valsartan" column equal to "A" (receiving valsartan), and those in "vanish_2" (Preclinical HCM) with the "valsartan" column equal to "P" (receiving placebo). 
 #The resulting means are stored in "vanish_active_mu" and "vanish_placebo_mu", 
 #while the resulting standard deviations are stored in "vanish_active_sd" and "vanish_placebo_sd".
