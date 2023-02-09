@@ -1,3 +1,6 @@
+# I
+
+
 #########################
 #POWER SIMULATIONS (scenario 3)
 ##########################
@@ -66,8 +69,8 @@ simulation_vanish<-
    k <- c()
    # A vector cohort2 is created, which stores the sample size for each iteration of the loop.
    cohort2 = seq(20,500,20)
-   # A loop is performed 25 times, where the index of the loop is stored in vuf.
-   for (vuf in 1:25) {
+   # A loop is performed 25 times, where the index of the loop is stored in x
+   for (x in 1:25) {
      # Within each iteration of the loop, two datasets are generated. 
      #The first dataset has the group label "active" and is generated using the rnorm_multi function
      # which generates multivariate normally distributed data taking correlated features into account. 
@@ -76,7 +79,7 @@ simulation_vanish<-
      #Both datasets are combined into a single data frame dat using rbind.
      dat<-
        rbind(
-        rnorm_multi(n= cohort2[vuf], 
+        rnorm_multi(n= cohort2[x], 
                     varnames = c("q","w","e","r","t","y","u","i","o"),
                     mu = vanish_active_mu,
                     sd = vanish_active_sd,
@@ -89,7 +92,7 @@ simulation_vanish<-
           mutate(outcome = (q+w+e+r+t+y+u+i+o)/9,
                  group = "active"),
         
-        rnorm_multi(n= cohort2[vuf], 
+        rnorm_multi(n= cohort2[x], 
                     varnames = c("q","w","e","r","t","y","u","i","o"),
                     mu = vanish_placebo_mu,
                     sd = vanish_placebo_sd,
@@ -106,7 +109,7 @@ simulation_vanish<-
        # A two-sample t-test is performed on the outcome variable between the two groups, and the p-value is extracted using the broom library and stored in a data frame k.
        
     t.test(.$outcome~.$group, data = .) %>% broom::tidy() %>% select(p.value) %>% pull() %>% 
-      unlist() %>% tibble(x = vuf)
+      unlist() %>% tibble(x = x)
      # After the loop has finished, the results of all 25 iterations are combined into a single data frame k.
      
       k <- rbind(k, dat)
