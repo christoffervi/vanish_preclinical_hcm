@@ -1,9 +1,17 @@
-# I
+# In the following section, we perform simulations to model a situation where the effect of valsartan on cardiac remodeling is 
+# halfway between that observed for patients with preclinincal vs early-stage HCM. 
+# The simulations are based on results from the VANISH trial including 178 patients with early-stage HCM and 34 with preclincal HCM.
+# Simulations were performed to estimate the power at identifying a beneficial effect of valsartan in preclinical HCM given different sample sizes.
+# In short, we modelled power given three different scenarios: 
+# 1) That the effect in early-stage HCM would be perfectly replicated
+# 2) That the effect-size would be similar but would be blunted by a slower rate of disease progression in preclinical HCM
+# 3) That the effect-size would be halfway between that mentioned in the two cohorts.
+# Below the code is given for scenario 3. The statistical code for the other scenarios are not provided, but are almost identical to that provided.
 
 
-#########################
+###################################
 #POWER SIMULATIONS (scenario 3)
-##########################
+#####################################
 #The mean and SD are calculated separately for change in each of the 9 outcome components for two groups: 
 #those in "vanish_1" (early-stage HCM) with the "valsartan" column equal to "A" (receiving valsartan), and those in "vanish_2" (Preclinical HCM) with the "valsartan" column equal to "P" (receiving placebo). 
 #The resulting means are stored in "vanish_active_mu" and "vanish_placebo_mu", 
