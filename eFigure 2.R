@@ -9,10 +9,25 @@ vanish_2 <- vanish_2 %>% mutate(flvmassb_bsa_10 = flvmassb_bsa/10,
                                 #progressors = factor(progressors, labels = c("no", "yes")),
                                 lvef_cmrb_5 = lvef_cmrb/5,
                                 lvef_cmrb_10 = lvef_cmrb/10,
-                                bmib_5 = bmib/5
+                                bmib_5 = bmib/5,
+                                lv_ratio_01= lv_ratio*100
 )
 
-
+lm_df <-
+  bind_rows(
+    lm(composite2_no_s~swvsb_z, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_e~ewvsb_z, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_mlvwt~mlvwtb_z, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_lvedv~flvedvb_bsa_10, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_lvesv~flvesvb_bsa_5, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_lvmass~flvmassb_bsa_10, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_lav~flavb_bsa_5, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_bnp~log_ntbnp, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2_no_tnt~tntb, data = vanish_2) %>% broom::tidy(conf.int=T),
+    lm(composite2~lvef_cmrb_5, data = vanish_2) %>% broom::tidy(conf.int=T),
+    #             lm(composite2~lvedd, data = vanish_2) %>% broom::tidy(conf.int=T)
+    lm(composite2~lv_ratio_01, data = vanish_2) %>% broom::tidy(conf.int=T)) %>% 
+  filter(term!="(Intercept)") %>% mutate(pred = "var_removed")
 #Making dataset above better for plotting
 fig3_df<-
   lm_df %>% 
